@@ -77,3 +77,18 @@ LIMIT 2
 UPDATE species
 SET conservation_status = 'Historic'
 WHERE extract(YEAR FROM discovery_date ) < 1800
+
+-- Problem 8
+SELECT sighting_id,
+CASE
+WHEN extract(HOUR FROM sighting_time) < 12 THEN 'Morning'
+WHEN extract(HOUR FROM sighting_time) >= 12  AND extract(HOUR FROM sighting_time) < 17 THEN 'Afternoon'
+WHEN extract(HOUR FROM sighting_time) > 17 THEN 'Evening'
+END  as time_of_day
+FROM sightings
+
+-- Problem 9
+DELETE FROM rangers
+WHERE ranger_id not in (SELECT ranger_id FROM sightings)
+
+
